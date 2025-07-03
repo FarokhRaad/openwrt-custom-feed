@@ -43,11 +43,8 @@ endef
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-	# Copy full source tree (CMakeLists.txt, cmake/, files/, src/) into build dir
-	cp -a $(PKG_SOURCE_DIR)/CMakeLists.txt $(PKG_BUILD_DIR)/
-	cp -a $(PKG_SOURCE_DIR)/cmake $(PKG_BUILD_DIR)/
-	cp -a $(PKG_SOURCE_DIR)/files $(PKG_BUILD_DIR)/
-	cp -a $(PKG_SOURCE_DIR)/src $(PKG_BUILD_DIR)/
+	# Copy entire owsd-nano directory contents (all files and folders) into build directory
+	cp -a $(CURDIR)/* $(PKG_BUILD_DIR)/
 endef
 
 define Package/owsd-nano/install
