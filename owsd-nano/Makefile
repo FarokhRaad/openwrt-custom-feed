@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# OpenWrt package Makefile for owsd-nano
 #
-# owsd-nano is a minimal fork of owsd.
-# Original source: https://dev.iopsys.eu/iopsys/owsd
-# Minimal version fork and maintenance: Farokh Panahirad <raad.farokh@gmail.com>
+# owsd-nano - Minimal websocket ubus bridge for OpenWrt
+#
+# Forked from owsd
+# Upstream: https://dev.iopsys.eu/iopsys/owsd
+# Minimal version and OpenWrt packaging: Farokh Panahirad <raad.farokh@gmail.com>
 
 include $(TOPDIR)/rules.mk
 
@@ -16,7 +17,6 @@ PKG_SOURCE_SUBDIR:=owsd-nano
 
 PKG_MAINTAINER:=Farokh Panahirad <raad.farokh@gmail.com>
 PKG_LICENSE:=GPL-2.0-or-later
-PKG_LICENSE_FILES:=
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
 
@@ -26,20 +26,28 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/owsd-nano
   SECTION:=net
   CATEGORY:=Network
-  TITLE:=owsd-nano websocket ubus bridge
+  TITLE:=Minimal websocket ubus bridge (nano fork)
   DEPENDS:=+libwebsockets +ubus +ubox +libjson-c
   URL:=https://dev.iopsys.eu/iopsys/owsd
   MAINTAINER:=$(PKG_MAINTAINER)
 endef
 
 define Package/owsd-nano/description
-Minimal websocket ubus bridge for OpenWrt.
-
-Fork of owsd by Martin Tippmann.
+A minimal websocket ubus bridge for OpenWrt.
+Forked from owsd [https://dev.iopsys.eu/iopsys/owsd], with features stripped for size.
 endef
 
 define Package/owsd-nano/conffiles
 /etc/config/owsd
+endef
+
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	# Copy full source tree (CMakeLists.txt, cmake/, files/, src/) into build dir
+	cp -a $(PKG_SOURCE_DIR)/CMakeLists.txt $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/cmake $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/files $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/src $(PKG_BUILD_DIR)/
 endef
 
 define Package/owsd-nano/install
