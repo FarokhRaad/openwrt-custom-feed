@@ -27,7 +27,7 @@ define Package/owsd-nano
   SECTION:=net
   CATEGORY:=Network
   TITLE:=Minimal websocket ubus bridge (nano fork)
-  DEPENDS:=+libwebsockets +ubus +ubox +libjson-c
+  DEPENDS:= +libblobmsg-json +libwebsockets +ubus +ubox +libjson-c +rpcd
   URL:=https://dev.iopsys.eu/iopsys/owsd
   MAINTAINER:=$(PKG_MAINTAINER)
 endef
@@ -43,8 +43,7 @@ endef
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-	# Copy entire owsd-nano directory contents (all files and folders) into build directory
-	cp -a $(CURDIR)/* $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/* $(PKG_BUILD_DIR)/
 endef
 
 define Package/owsd-nano/install

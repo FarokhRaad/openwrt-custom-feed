@@ -3,9 +3,8 @@ project(owsd-nano C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-add_definitions(-Os -Wall -Wextra -std=gnu11)
 
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 
 set(SRC_FILES
     src/main.c
@@ -21,31 +20,31 @@ set(SRC_FILES
     src/ws_http_serve.c
 )
 
-find_package(libwebsockets REQUIRED)
+# Find packages
+find_package(LIBWEBSOCKETS REQUIRED)
 find_package(LIBUBOX REQUIRED)
 find_package(UBUS REQUIRED)
-find_library(JSONC_LIBRARY NAMES json-c json)
-find_path(JSONC_INCLUDE_DIR json-c/json.h)
 
-if(NOT JSONC_LIBRARY OR NOT JSONC_INCLUDE_DIR)
-    message(FATAL_ERROR "libjson-c not found")
-endif()
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(JSONC REQUIRED json-c)
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/src
     ${LIBWEBSOCKETS_INCLUDE_DIRS}
     ${LIBUBOX_INCLUDE_DIRS}
     ${UBUS_INCLUDE_DIRS}
-    ${JSONC_INCLUDE_DIR}
+    ${JSONC_INCLUDE_DIRS}
 )
 
 add_executable(owsd-nano ${SRC_FILES})
+
+target_compile_options(owsd-nano PRIVATE -Os -Wall -Wextra)
 
 target_link_libraries(owsd-nano
     ${LIBWEBSOCKETS_LIBRARIES}
     ${LIBUBOX_LIBRARIES}
     ${UBUS_LIBRARIES}
-    ${JSONC_LIBRARY}
+    ${JSONC_LIBRARIES}
 )
 
 install(TARGETS owsd-nano RUNTIME DESTINATION bin)

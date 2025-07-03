@@ -13,6 +13,6 @@ set(UBUS_LIBRARIES ${UBUS_LIBRARY})
 set(UBUS_INCLUDE_DIRS ${UBUS_INCLUDE_DIR})
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(UBUS DEFAULT_MSG UBUS_LIBRARY UBUS_INCLUDE_DIR)
+find_package_handle_standard_args(UBUS DEFAULT_MSG UBUS_LIBRARIES UBUS_INCLUDE_DIRS)
 
-mark_as_advanced(UBUS_INCLUDE_DIR UBUS_LIBRARY)
+mark_as_advanced(UBUS_INCLUDE_DIRS UBUS_LIBRARIES)
