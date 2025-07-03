@@ -1,0 +1,8 @@
+* text=auto
+*.sh text eol=lf
+*.init text eol=lf
+*.config text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+Makefile text eol=lf
+CMakeLists.txt text eol=lf
