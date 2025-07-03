@@ -11,6 +11,9 @@ PKG_NAME:=owsd-nano
 PKG_VERSION:=1.0
 PKG_RELEASE:=1
 
+PKG_SOURCE_PROTO:=none
+PKG_SOURCE_SUBDIR:=owsd-nano
+
 PKG_MAINTAINER:=Farokh Panahirad <raad.farokh@gmail.com>
 PKG_LICENSE:=GPL-2.0-or-later
 PKG_LICENSE_FILES:=
