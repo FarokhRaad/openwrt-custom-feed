@@ -23,7 +23,7 @@ set(SRC_FILES
 # Find packages
 find_package(LIBWEBSOCKETS REQUIRED)
 find_package(LIBUBOX REQUIRED)
-find_package(UBUS REQUIRED)
+find_package(LIBUBUS REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(JSONC REQUIRED json-c)
