@@ -42,9 +42,9 @@ define Package/owsd-nano/conffiles
 endef
 
 define Build/Prepare
-    $(call Build/Prepare/Default)
-    rm -rf $(PKG_BUILD_DIR)/mnt
-    cp -a $(PKG_SOURCE_DIR)/* $(PKG_BUILD_DIR)/
+	$(call Build/Prepare/Default)
+	# Copy entire owsd-nano directory contents (all files and folders) into build directory
+	cp -a $(CURDIR)/* $(PKG_BUILD_DIR)/
 endef
 
 define Package/owsd-nano/install
