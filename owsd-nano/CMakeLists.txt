@@ -1,44 +1,50 @@
-cmake_minimum_required(VERSION 3.9)
-project(owsd C)
+# SPDX-License-Identifier: GPL-2.0-or-later
+#
+# owsd-nano - Minimal websocket ubus bridge for OpenWrt
+#
+# Forked from owsd (original author: Martin Tippmann)
+# Upstream: https://dev.iopsys.eu/iopsys/owsd
+# Minimal version and OpenWrt packaging: Farokh Panahirad <raad.farokh@gmail.com>
 
-add_definitions(-Os -std=gnu11 -D_XOPEN_SOURCE=700)
+include $(TOPDIR)/rules.mk
 
-set(CMAKE_INTERPROCEDURAL_OPTIMIZATION FALSE)
+PKG_NAME:=owsd-nano
+PKG_VERSION:=1.0
+PKG_RELEASE:=1
+PKG_MAINTAINER:=Farokh Panahirad <raad.farokh@gmail.com>
+PKG_LICENSE:=GPL-2.0-or-later
+PKG_BUILD_PARALLEL:=1
+PKG_INSTALL:=1
 
-set(SOURCES
-    src/main.c
-    src/ws_http.c
-    src/ws_http_serve.c
-    src/wsubus.c
-    src/rpc.c
-    src/rpc_call.c
-    src/rpc_list.c
-    src/rpc_sub.c
-    src/access_check.c
-    src/util_jsonrpc.c
-    src/ubusx_acl.c
-)
+include $(INCLUDE_DIR)/package.mk
+include $(INCLUDE_DIR)/cmake.mk
 
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(LIBWEBSOCKETS REQUIRED libwebsockets)
-pkg_check_modules(LIBUBOX REQUIRED libubox)
-pkg_check_modules(JSON_C REQUIRED json-c)
-pkg_check_modules(UBUS REQUIRED ubus)
+define Package/owsd-nano
+  SECTION:=net
+  CATEGORY:=Network
+  TITLE:=Minimal websocket ubus bridge (nano fork)
+  DEPENDS:=+libwebsockets +ubus +ubox +libjson-c
+  URL:=https://dev.iopsys.eu/iopsys/owsd
+endef
 
-include_directories(
-    ${LIBWEBSOCKETS_INCLUDE_DIRS}
-    ${LIBUBOX_INCLUDE_DIRS}
-    ${JSON_C_INCLUDE_DIRS}
-    ${UBUS_INCLUDE_DIRS}
-)
+define Package/owsd-nano/description
+A minimal websocket ubus bridge for OpenWrt.
+Forked from owsd by Martin Tippmann, with features stripped for size.
+endef
 
-add_executable(owsd ${SOURCES})
+define Package/owsd-nano/conffiles
+/etc/config/owsd
+endef
 
-target_link_libraries(owsd
-    ${LIBWEBSOCKETS_LIBRARIES}
-    ${LIBUBOX_LIBRARIES}
-    ${JSON_C_LIBRARIES}
-    ${UBUS_LIBRARIES}
-)
+define Package/owsd-nano/install
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/owsd-nano $(1)/usr/bin/owsd-nano
 
-install(TARGETS owsd RUNTIME DESTINATION usr/bin)
+	$(INSTALL_DIR) $(1)/etc/init.d
+	$(INSTALL_BIN) ./files/owsd.init $(1)/etc/init.d/owsd-nano
+
+	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_CONF) ./files/owsd.config $(1)/etc/config/owsd
+endef
+
+$(eval $(call BuildPackage,owsd-nano))
