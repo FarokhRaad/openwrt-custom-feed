@@ -43,7 +43,10 @@ endef
 
 define Build/Prepare
 	$(call Build/Prepare/Default)
-	cp -a $(PKG_SOURCE_DIR)/* $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/CMakeLists.txt $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/cmake $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/files $(PKG_BUILD_DIR)/
+	cp -a $(PKG_SOURCE_DIR)/src $(PKG_BUILD_DIR)/
 endef
 
 define Package/owsd-nano/install
