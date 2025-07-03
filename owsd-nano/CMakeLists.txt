@@ -2,7 +2,7 @@
 #
 # owsd-nano - Minimal websocket ubus bridge for OpenWrt
 #
-# Forked from owsd (original author: Martin Tippmann)
+# Forked from owsd
 # Upstream: https://dev.iopsys.eu/iopsys/owsd
 # Minimal version and OpenWrt packaging: Farokh Panahirad <raad.farokh@gmail.com>
 
@@ -29,7 +29,7 @@ endef
 
 define Package/owsd-nano/description
 A minimal websocket ubus bridge for OpenWrt.
-Forked from owsd by Martin Tippmann, with features stripped for size.
+Forked from owsd [https://dev.iopsys.eu/iopsys/owsd], with features stripped for size.
 endef
 
 define Package/owsd-nano/conffiles

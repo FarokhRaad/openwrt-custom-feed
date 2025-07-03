@@ -1,0 +1,6 @@
+config OWSD_NANO
+    bool "owsd-nano websocket ubus bridge"
+    default n
+    help
+      Minimal websocket ubus bridge for OpenWrt.
+      Forked from owsd [https://dev.iopsys.eu/iopsys/owsd], with features stripped for size.

@@ -1,0 +1,6 @@
+
+menu "Custom Packages"
+
+    source "owsd-nano/Config.in"
+
+endmenu
